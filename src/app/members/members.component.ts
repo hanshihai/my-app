@@ -22,9 +22,11 @@ export class MembersComponent implements OnInit {
 
   onSelect(member: Member): void {
 	  this.selectedMember = member;
+	  this.memberService.triggerMessage('MembersComponent: select member '+member.name);
   }
   
   getMembers(): void {
-	  this.members = this.memberService.getMembers();
+	  this.memberService.getMembers()
+		.subscribe(memb => this.members = memb);
   }
 }
