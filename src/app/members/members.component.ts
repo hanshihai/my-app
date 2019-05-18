@@ -29,4 +29,9 @@ export class MembersComponent implements OnInit {
 	  this.memberService.getMembers()
 		.subscribe(memb => this.members = memb);
   }
+  
+  save(): void {
+	  this.memberService.triggerMessage('MembersComponent: update member '+this.selectedMember.id);
+	  this.memberService.update(this.selectedMember);
+  }
 }
