@@ -39,6 +39,17 @@ export class MemberServiceService {
 		);
   }
   
+  deleteMember(m: Member | number): Observable<Member> {
+	  const tid = typeof m === 'number' ? m : m.id;
+	  const remoteUrl = `${this.backServiceUrl}/${tid}`;
+	  
+	  return this.http.delete<Member>(remoteUrl, httpOptions)
+			.pipe(
+				tap(_ => this.triggerMessage(`deleted member id=${tid}`)),
+				catchError(this.handleError<Member>('deleteMember'))
+			);
+  }
+  
   update(member: Member): Observable<any> {
 	  return this.http.put(this.backServiceUrl, member, httpOptions)
 				.pipe(
@@ -48,14 +59,15 @@ export class MemberServiceService {
   }
   
   getMemberById(id: number): Observable<Member> {
-	  const url = '${this.backServiceUrl/${id}';
+	  const url = `${this.backServiceUrl}/${id}`;
 	  return this.http.get<Member>(url)
 				.pipe(
-					tap(_ => this.triggerMessage('getched member with id = ${id}')),
-					catchError(this.handleError<Member>('getMemberById id = ${id}'))
+					tap(_ => this.triggerMessage(`getched member with id = ${id}`)),
+					catchError(this.handleError<Member>(`getMemberById id = ${id}`))
 				);
 	  
   }
+  
   triggerMessage(message : string) : void {
 	  this.messageService.add(message);
   }
@@ -63,7 +75,7 @@ export class MemberServiceService {
   private handleError<T>(operation = 'operation', result?: T) {
 	  return (error: any): Observable<T> => {
 		  console.error(error);
-		  this.triggerMessage('${operation} failed: ${error.message}');
+		  this.triggerMessage(`${operation} failed: ${error.message}`);
 		  return of(result as T);
 	  };
   }

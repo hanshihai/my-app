@@ -14,19 +14,16 @@ export class MembersComponent implements OnInit {
 
   selectedMember: Member;
   
+  
   constructor(private memberService: MemberServiceService) { }
 
   ngOnInit() {
 	  this.getMembers();
   }
-
-  add(name: String): void {
-	  name = name.trim();
-	  if(!name) {return;}
-	  this.memberService.addMember({name} as Member)
-	  .subscribe(m => {
-		  this.members.push(m);
-	  });
+  
+  delete(member: Member): void {
+	  this.members = this.members.filter(m => m !== member);
+	  this.memberService.deleteMember(member).subscribe();
   }
   
   onSelect(member: Member): void {

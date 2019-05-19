@@ -5,13 +5,10 @@
 	[class.selected]="member === selectedMember"
 	(click)="onSelect(member)">
 <span class="badge">{{member.id}}</span>  {{member.name}}
+<button class="delete" title="delete member" (click)="delete(member)">delete</button>
 </li>
 </ul>
 
-<div>
-<label>Member name: <input #memberName /></label>
-<button (click)="add(memberName.value); memberName=''">add</button>
-</div>
 
 <div *ngIf="selectedMember">
 <h2>{{selectedMember.name | uppercase }} Details</h2>
