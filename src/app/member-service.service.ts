@@ -31,6 +31,14 @@ export class MemberServiceService {
 				);
   }
   
+  addMember(m: Member): Observable<Member> {
+	  return this.http.post<Member>(this.backServiceUrl, m, httpOptions)
+		.pipe(
+			tap((newM: Member) => this.triggerMessage('added member id=$(newM.id}')),
+			catchError(this.handleError<Member>('addMember'))
+		);
+  }
+  
   update(member: Member): Observable<any> {
 	  return this.http.put(this.backServiceUrl, member, httpOptions)
 				.pipe(

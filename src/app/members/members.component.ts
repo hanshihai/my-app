@@ -20,6 +20,15 @@ export class MembersComponent implements OnInit {
 	  this.getMembers();
   }
 
+  add(name: String): void {
+	  name = name.trim();
+	  if(!name) {return;}
+	  this.memberService.addMember({name} as Member)
+	  .subscribe(m => {
+		  this.members.push(m);
+	  });
+  }
+  
   onSelect(member: Member): void {
 	  this.selectedMember = member;
 	  this.memberService.triggerMessage('MembersComponent: select member '+member.name);
