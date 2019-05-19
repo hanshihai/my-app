@@ -4,8 +4,9 @@
 <li *ngFor="let member of members" 
 	[class.selected]="member === selectedMember"
 	(click)="onSelect(member)">
-<span class="badge">{{member.id}}</span>  {{member.name}}
-<button class="delete" title="delete member" (click)="delete(member)">delete</button>
+<span class="badge">{{member.id}}</span>
+  {{member.name}}..
+<span><button class="delete" title="delete member" (click)="delete(member)">delete</button></span>
 </li>
 </ul>
 
