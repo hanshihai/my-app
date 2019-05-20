@@ -1,0 +1,11 @@
+<div id="seach-component">
+	<h4>Member Search</h4>
+	
+	<input #searchBox id="search-box" (input)="search(searchBox.value)" />
+	
+	<ul class="seach-result">
+		<li *ngFor="let m of members$ | async" >
+			{{m.name}}
+		</li>
+	</ul>
+</div>

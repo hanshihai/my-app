@@ -22,6 +22,18 @@ export class MemberServiceService {
 	private http: HttpClient,
 	private messageService: MessageService) { }
   
+  searchMembers(term: string): Observable<Member[]> {
+	  const remoteUrl = `${this.backServiceUrl}/?name=${term}`;
+	  
+	  if(!term.trim()) {
+		  return of([]);
+	  }
+	  return this.http.get<Member[]>(remoteUrl).pipe(
+				tap(_ => this.triggerMessage(`found members for "${term}"`)),
+				catchError(this.handleError<Member[]>('searchMembers',[]))
+	  );
+  }
+  
   getMembers(): Observable<Member[]> {
 	  this.messageService.add('MemberServiceService: fetch members');
 	  return this.http.get<Member[]>(this.backServiceUrl)
