@@ -9,8 +9,8 @@ import { MessagesComponent } from './messages/messages.component';
 
 import { HttpClientModule }    from '@angular/common/http';
 
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService }  from './in-memory-data.service';
+/*import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryDataService }  from './in-memory-data.service';*/
 import { MemberSearchComponent } from './member-search/member-search.component';
 
 
@@ -23,13 +23,14 @@ import { MemberSearchComponent } from './member-search/member-search.component';
   ],
   imports: [
     BrowserModule,
-	FormsModule,
+	  FormsModule,
     AppRoutingModule,
-	HttpClientModule,
+    HttpClientModule
+    /*HttpClientModule,
 	
 	HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
-    )
+    )*/
   ],
   providers: [],
   bootstrap: [AppComponent]

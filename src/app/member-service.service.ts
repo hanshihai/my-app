@@ -16,14 +16,14 @@ import { catchError, map, tap } from 'rxjs/operators';
 })
 export class MemberServiceService {
 
-  private backServiceUrl = 'api/members';
+  private backServiceUrl = 'http://localhost:8080/api/members';
   
   constructor(
 	private http: HttpClient,
 	private messageService: MessageService) { }
   
   searchMembers(term: string): Observable<Member[]> {
-	  const remoteUrl = `${this.backServiceUrl}/?name=${term}`;
+	  const remoteUrl = `${this.backServiceUrl}/search?name=${term}`;
 	  
 	  if(!term.trim()) {
 		  return of([]);
@@ -46,7 +46,7 @@ export class MemberServiceService {
   addMember(m: Member): Observable<Member> {
 	  return this.http.post<Member>(this.backServiceUrl, m, httpOptions)
 		.pipe(
-			tap((newM: Member) => this.triggerMessage('added member id=$(newM.id}')),
+			tap((newM: Member) => this.triggerMessage(`added member id=${newM.id}`)),
 			catchError(this.handleError<Member>('addMember'))
 		);
   }

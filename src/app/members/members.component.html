@@ -10,6 +10,10 @@
 </li>
 </ul>
 
+<div>
+  <label>Member name: <input #addMember id="add-member"/></label>
+  <button (click)="add(addMember.value); addMember.value=''">add</button>
+</div>
 
 <div *ngIf="selectedMember">
 <h2>{{selectedMember.name | uppercase }} Details</h2>

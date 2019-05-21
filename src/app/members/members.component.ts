@@ -13,11 +13,14 @@ export class MembersComponent implements OnInit {
   members: Member[];
 
   selectedMember: Member;
-  
+
+  public addMember: string;
   
   constructor(private memberService: MemberServiceService) { }
 
   ngOnInit() {
+    this.addMember = 'please input member name';
+
 	  this.getMembers();
   }
   
@@ -25,7 +28,21 @@ export class MembersComponent implements OnInit {
 	  this.members = this.members.filter(m => m !== member);
 	  this.memberService.deleteMember(member).subscribe();
   }
-  
+
+  add(addedName: string): void {
+    const m : Member = {
+      id: 0,
+      name: addedName
+    }
+
+    addedName = addedName.trim();
+    if(!addedName) {return;}
+    this.memberService.addMember(m)
+      .subscribe(m => {
+        this.members.push(m);
+      });
+  }
+
   onSelect(member: Member): void {
 	  this.selectedMember = member;
 	  this.memberService.triggerMessage('MembersComponent: select member '+member.name);
@@ -38,6 +55,6 @@ export class MembersComponent implements OnInit {
   
   save(): void {
 	  this.memberService.triggerMessage('MembersComponent: update member '+this.selectedMember.id);
-	  this.memberService.update(this.selectedMember);
+	  this.memberService.update(this.selectedMember).subscribe();
   }
 }
